@@ -1,14 +1,23 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {useState } from "react"
 import axios from "axios"
 
-function AdminLogin(){
+function AdminLogin(props){
+
+    const navigate = useNavigate()
+
+
+    if(props.globalState.is_admin_logged_in == true){
+        navigate("adminhome")
+    }
 
    const [currentState, changeState] = useState({
         username: "",
         password: "",
         signinerrors: ""
    })
+
+
 
    const handleUsername = event => {
         changeState({
@@ -41,7 +50,19 @@ function AdminLogin(){
                 })
 
                 //use axios
-                const feedback = await axios.post("", {username, password})
+                const feedback = await axios.post("http://localhost:4000/adminlogin", {username, password})
+
+                const data = feedback.data
+                if(data.code === "success"){
+                    //logged in
+                    props.loginAdmin(data.data);
+
+                }else{
+
+                        //
+                }
+
+
 
 
             }else{
