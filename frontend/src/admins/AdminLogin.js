@@ -14,7 +14,8 @@ function AdminLogin(props){
    const [currentState, changeState] = useState({
         username: "",
         password: "",
-        signinerrors: ""
+        signinerrors: "",
+        loadSpinner: false
    })
 
 
@@ -34,6 +35,26 @@ function AdminLogin(props){
         })
    }
 
+   const startSpinner = () => {
+
+        changeState({
+            ...currentState,
+            loadSpinner: true
+        })
+
+   }
+
+   const stopSpinner = () => {
+
+        changeState({
+            ...currentState,
+            loadSpinner: false
+        })
+
+    }
+
+   
+
    const SignInAdmin = async (event) => {
             event.preventDefault()
 
@@ -50,12 +71,19 @@ function AdminLogin(props){
                 })
 
                 //use axios
+                //introduce a spinner
+                startSpinner()
                 const feedback = await axios.post("http://localhost:4000/adminlogin", {username, password})
 
                 const data = feedback.data
+                const token = data.data.token
+                
                 if(data.code === "success"){
                     //logged in
+                    //save the token as cookie
+                    stopSpinner()
                     props.loginAdmin(data.data);
+
 
                 }else{
 
@@ -110,6 +138,18 @@ function AdminLogin(props){
     <h1>Movies Base | Administrators</h1>
     <p class="lead text-muted">Control your platform from here</p>
     </div>
+       <div>
+            {
+                currentState.loadSpinner == true ? <> 
+                                    <div className="spinner-border mt-5" role="status">
+                                        <span className="sr-only">Loading...</span>
+                        
+                                    </div>
+                <div>Logging you in. Please wait ...</div></>: 
+                ""
+            }
+       </div>
+
     </section>
     
     <div>

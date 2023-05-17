@@ -75,7 +75,8 @@ server.post("/adminlogin", async (request, response) => {
             message: 'Admin logged in',
             code: "success",
             data: {
-                current_admin: username
+                current_admin: username,
+                token: "token"
             }
         })
         
