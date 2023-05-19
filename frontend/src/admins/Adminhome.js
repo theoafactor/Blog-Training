@@ -1,11 +1,35 @@
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+
 function AdminHome(props){
 
-    const logoutAdmin = (event) => {
+    const navigate = useNavigate();
+
+    console.log("CUrrent Admin from AdminHome: ", props)
+
+    
+
+    if(props.current_admin == null){
+        //redirect
+        navigate("/admin")
+    }
+
+
+    const logoutAdmin = async (event) => {
         //logout the admin
         event.preventDefault()
         // props.logout_admin()
 
-        props.logout_admin()
+        //send a request to the backend to logout the user
+        const logout_feedback = await axios.post("/adminlogout")
+
+        if(logout_feedback.data.code === "logout-success"){
+            props.logout_admin()
+        }else{
+            //
+        }
+
+       
     }
 
 

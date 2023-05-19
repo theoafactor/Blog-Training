@@ -73,10 +73,12 @@ function AdminLogin(props){
                 //use axios
                 //introduce a spinner
                 startSpinner()
-                const feedback = await axios.post("http://localhost:4000/adminlogin", {username, password})
+                const feedback = await axios.post("http://localhost:4000/adminlogin", {username, password},  {
+                    withCredentials: true
+                })
 
                 const data = feedback.data
-                const token = data.data.token
+                // const token = data.data.token
                 
                 if(data.code === "success"){
                     //logged in
@@ -85,9 +87,13 @@ function AdminLogin(props){
                     props.loginAdmin(data.data);
 
 
+
+
+
                 }else{
 
-                        //
+                    console.log(feedback);    
+
                 }
 
 

@@ -8,13 +8,14 @@ import AdminLogin from "./admins/AdminLogin"
 import Home from "./Home"
 import AdminHome from "./admins/Adminhome"
 import axios from "axios"
+import Cookies from "js-cookie"
+import localforage from "localforage"
 
 import { useNavigate } from "react-router-dom"
 
 import { useState, useEffect } from "react"
 
 function App(){
-
 
 
     //define the global state
@@ -27,13 +28,32 @@ function App(){
     function checkCurrentAdminLoggedIn(){
         //check for session token returned from the backend
 
-        return false;
+        const admin_token = Cookies.get("connect.sid");
+
+        console.log(admin_token)
+        
+
+        if(!admin_token){
+            return false;
+        }
+
+        return true;
     }
 
     function getCurrentAdmin(){
         //check current token and use that token to get current user
+        const admin_token = Cookies.get("connect.sid");
 
-        return null
+        if(!admin_token){
+            return null
+        }
+
+        //return await localforage.getItem("current-admin");
+
+        return "Jerry Admin"
+
+        
+       
     }
 
 
@@ -41,12 +61,16 @@ function App(){
     // const navigate = useNavigate()
 
     const checkAdminLoggedIn = () => {
+        //look for the data in the cookie 
+        
 
     }
 
    
 
     const loginAdmin = (admin) => {
+
+        console.log("Admin data ", admin)
 
         //update the state
         setGlobalState({
@@ -55,20 +79,27 @@ function App(){
             current_admin: admin
         })
 
+
+
+
     }
 
 
     const globalLogoutAdmin = () => {
-        //update the state of the application
-        // setGlobalState({
-        //     is_admin_logged_in: false,
-        //     current_admin: null
-        // })
+        
+        //send a request to the backen
+        //delete the cookie
+        Cookies.remove("connect.sid");
 
-        // setGlobalState({
-        //     is_admin_logged_in: false
-        // })
 
+       //update the state
+       setGlobalState({
+            is_admin_logged_in: false,
+            current_admin: null
+       })
+
+
+        
 
     }
 
@@ -76,9 +107,12 @@ function App(){
 
         console.log(currentGlobalState)
         
-        // if(currentGlobalState.is_admin_logged_in === false){
-        //       console.log("logged out")
-        // } 
+        if(currentGlobalState.is_admin_logged_in === false){
+
+            console.log("logged out")
+
+
+        } 
 
     }, [currentGlobalState])
 
@@ -89,7 +123,7 @@ function App(){
                   <Route path="/login" element={<Login/>}></Route>
                   <Route path="/admin"  element={<AdminLogin loginAdmin={(admin) => loginAdmin(admin)} globalState={currentGlobalState}/>}></Route>
                   <Route path="/register" element={<Register/>}></Route>
-                  <Route path="/admin/adminhome" element={<AdminHome current_admin="testadmin" logout_admin={globalLogoutAdmin} />}></Route>
+                  <Route path="/admin/adminhome" element={<AdminHome current_admin={currentGlobalState.current_admin} logout_admin={globalLogoutAdmin} />}></Route>
               </Routes>
           </BrowserRouter>
 
