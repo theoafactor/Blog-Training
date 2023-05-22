@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom";
 import axios from "axios"
 
 function AdminHome(props){
@@ -50,7 +51,7 @@ function AdminHome(props){
                                                     <a class="nav-link text-white active" href="#">Create Article</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="#">Create Category</a>
+                                                    <Link to="/admin/create-category"><a class="nav-link">Create Category</a></Link>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="#">Add Admin</a>

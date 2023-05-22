@@ -79,6 +79,8 @@ function AdminLogin(props){
 
                 const data = feedback.data
                 // const token = data.data.token
+
+                console.log("Admin logged in: ", data)
                 
                 if(data.code === "success"){
                     //logged in
@@ -112,81 +114,81 @@ function AdminLogin(props){
    }
 
     return <>
-    <header class="">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="#">MoviesBase | Admin</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link" href="#">Features</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link" href="#">Pricing</a>
-    </li>
-    </ul>
-    <span class="navbar-text">
-    <Link to="/login" className="nav-link">Sign In</Link>
-    </span>
-    </div>
-    </nav>        
-    </header>
-    
-    <main role="main">
-    
-    <section class="jumbotron text-center">
-    <div class="container">
-    <h1>Movies Base | Administrators</h1>
-    <p class="lead text-muted">Control your platform from here</p>
-    </div>
-       <div>
-            {
-                currentState.loadSpinner == true ? <> 
-                                    <div className="spinner-border mt-5" role="status">
-                                        <span className="sr-only">Loading...</span>
-                        
+                        <header class="">
+                                    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                                    <a class="navbar-brand" href="#">MoviesBase | Admin</a>
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                    <div class="collapse navbar-collapse" id="navbarText">
+                                    <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item active">
+                                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="nav-link" href="#">Features</a>
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="nav-link" href="#">Pricing</a>
+                                    </li>
+                                    </ul>
+                                    <span class="navbar-text">
+                                    <Link to="/login" className="nav-link">Sign In</Link>
+                                    </span>
                                     </div>
-                <div>Logging you in. Please wait ...</div></>: 
-                ""
-            }
-       </div>
+                                    </nav>        
+                                    </header>
+                                    
+                                    <main role="main">
+                                    
+                                    <section class="jumbotron text-center">
+                                    <div class="container">
+                                    <h1>Movies Base | Administrators</h1>
+                                    <p class="lead text-muted">Control your platform from here</p>
+                                    </div>
+                                    <div>
+                                            {
+                                                currentState.loadSpinner == true ? <> 
+                                                                    <div className="spinner-border mt-5" role="status">
+                                                                        <span className="sr-only">Loading...</span>
+                                                        
+                                                                    </div>
+                                                <div>Logging you in. Please wait ...</div></>: 
+                                                ""
+                                            }
+                                    </div>
 
-    </section>
-    
-    <div>
-    <div className="row mt-2" >
-                    
-                    <div className="col-md-6 mx-auto">
-                    <form onSubmit={SignInAdmin} method="POST">
-                        <h5>Sign in</h5>
-                        <hr></hr>
+                                    </section>
+                                    
+                                    <div>
+                                    <div className="row mt-2" >
+                                                    
+                                                    <div className="col-md-6 mx-auto">
+                                                    <form onSubmit={SignInAdmin} method="POST">
+                                                        <h5>Sign in</h5>
+                                                        <hr></hr>
 
-                        {currentState.signinerrors}
+                                                        {currentState.signinerrors}
 
-                    <div className="form-group">
-                        <label>Username</label>
-                        <input type="text" value={currentState.username} name='username' className="form-control" onChange={handleUsername}></input>
-                    </div>
+                                                    <div className="form-group">
+                                                        <label>Username</label>
+                                                        <input type="text" value={currentState.username} name='username' className="form-control" onChange={handleUsername}></input>
+                                                    </div>
 
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input type="password" value={currentState.password} name='password' className="form-control" onChange={handlePassword}></input>
-                    </div>
+                                                    <div className="form-group">
+                                                        <label>Password</label>
+                                                        <input type="password" value={currentState.password} name='password' className="form-control" onChange={handlePassword}></input>
+                                                    </div>
 
-                    <div className="form-group">
-                        <button className="btn btn-md btn-primary">Sign in</button>
-                    </div>
-            </form>
-                    </div>
-                </div>
-    </div>
-    
-    </main>
+                                                    <div className="form-group">
+                                                        <button className="btn btn-md btn-primary">Sign in</button>
+                                                    </div>
+                                            </form>
+                                                    </div>
+                                                </div>
+                                    </div>
+                        
+                        </main>
     
     
     </>

@@ -7,6 +7,7 @@ import Login from "./Login"
 import AdminLogin from "./admins/AdminLogin"
 import Home from "./Home"
 import AdminHome from "./admins/Adminhome"
+import AdminCategory from "./admins/AdminCategory"
 import axios from "axios"
 import Cookies from "js-cookie"
 import localforage from "localforage"
@@ -14,10 +15,11 @@ import localforage from "localforage"
 import { useNavigate } from "react-router-dom"
 
 import { useState, useEffect } from "react"
+import { AuthProvider } from "./utilities/auth"
 
 function App(){
 
-
+    
     //define the global state
     const [currentGlobalState, setGlobalState] = useState({
         is_admin_logged_in: checkCurrentAdminLoggedIn(),
@@ -110,22 +112,23 @@ function App(){
         if(currentGlobalState.is_admin_logged_in === false){
 
             console.log("logged out")
-
-
+            //window.location = "admin"
+        
         } 
 
     }, [currentGlobalState])
 
    
-  return  <BrowserRouter>
+  return  <AuthProvider>
               <Routes>
                   <Route path="/" element={<Home />}></Route>
                   <Route path="/login" element={<Login/>}></Route>
                   <Route path="/admin"  element={<AdminLogin loginAdmin={(admin) => loginAdmin(admin)} globalState={currentGlobalState}/>}></Route>
                   <Route path="/register" element={<Register/>}></Route>
                   <Route path="/admin/adminhome" element={<AdminHome current_admin={currentGlobalState.current_admin} logout_admin={globalLogoutAdmin} />}></Route>
+                  <Route path="/admin/create-category" element={<AdminCategory/>}></Route>
               </Routes>
-          </BrowserRouter>
+          </AuthProvider>
 
 }
 
